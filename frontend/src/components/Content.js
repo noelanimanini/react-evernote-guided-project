@@ -14,7 +14,7 @@ class Content extends Component {
   renderContent = () => {
     if (false) {
       return <NoteEditor />;
-    } else if (false) {
+    } else if (true) {
       return <NoteViewer />;
     } else {
       return <Instructions />;
