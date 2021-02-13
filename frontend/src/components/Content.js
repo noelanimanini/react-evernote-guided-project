@@ -12,16 +12,27 @@ import Instructions from './Instructions';
 */
 class Content extends Component {
   renderContent = () => {
-    if (false) {
-      return <NoteEditor />;
-    } else if (true) {
-      return <NoteViewer />;
+    if (this.props.clicked === true) {
+      return <NoteEditor 
+      notecontent={this.props.notecontent} 
+      changeNote={this.props.changeNote} 
+      submitHandler={this.props.submitHandler} 
+      handleCancel={this.props.handleCancel} />;
+      
+    } else if (this.props.notecontent.body) {
+
+      return <NoteViewer 
+      notecontent={this.props.notecontent} 
+      handleEditButton={this.props.handleEditButton} 
+      clicked={this.props.clicked} 
+      />;
+
     } else {
       return <Instructions />;
     }
   }
 
-  render() {
+  render() {  
     return (
       <div className='master-detail-element detail'>
         {this.renderContent()}

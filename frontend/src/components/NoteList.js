@@ -3,7 +3,7 @@ import NoteItem from './NoteItem';
 
 const NoteList = (props) => {
   return (
-    <ul>
+    <ul onClick={() => props.handleCancel()}>
       {props.notes.map( (note) => <NoteItem handleClick={props.handleClick} key={note.id} note={note} /> )}
     </ul>
   );
