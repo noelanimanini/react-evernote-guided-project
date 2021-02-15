@@ -108,61 +108,25 @@ class NoteContainer extends Component {
     console.log(this.state)
   }
 
-  // foundNotesFunction = (note) => {
-  //   console.log('this works too well')
-  //   console.log(note)
-  // }
-
-    // for (let i = 0; i < props.length; i++) {
-    //   let note = props[i].title
-    //   let noteTitle = note.search(/([a-zA-Z])\w+/g)
-    //   console.log(note)
-    //   console.log(noteTitle)
-  
-
-     // const search = e.target.value
-    // // console.log(props)
-    // // console.log(searchTerm)
-
-    // 
-
-    // for(let i = 0; i < props.length; i++) {
-    //   const noteTitle = props[i].title
-    //   const foundNote = noteTitle.find( title => title === searchTerm)
-    //   console.log(foundNote)
-
-    // e.persist()
-    // const foundNote = e.target.value
-    // this.setState( )
-      
-    // //   prevState => {
-    // //   return {notes: prevState.notes.filter( note => note.title === foundNote ? note.title : foundNote)}
-    // // })
-    // console.log(foundNote)
-    // console.log(this.state.notes.title)
-  
-
-
   render() {
     return (
       <Fragment>
         <Search  handleSearch={this.handleSearch} notes={this.state.notes} />
         <div className='container'>
           <Sidebar 
-          handleClick={this.handleClick} 
-          foundNotes={this.state.foundNotes} 
-          handleCancel={this.handleCancel}
-          handleNew={this.handleNew}
-          // foundNotes={this.state.foundNotes} 
-          // foundNotesFunction={this.foundNotesFunction}
+            handleClick={this.handleClick} 
+            foundNotes={this.state.foundNotes} 
+            handleCancel={this.handleCancel}
+            handleNew={this.handleNew}
+            
           />
           <Content 
-          notecontent={this.state.addednote} 
-          handleEditButton={this.handleEditButton} 
-          clicked={this.state.clicked} 
-          changeNote={this.changeNote} 
-          submitHandler={this.submitHandler} 
-          handleCancel={this.handleCancel}/>
+            notecontent={this.state.addednote} 
+            handleEditButton={this.handleEditButton} 
+            clicked={this.state.clicked} 
+            changeNote={this.changeNote} 
+            submitHandler={this.submitHandler} 
+            handleCancel={this.handleCancel}/>
         </div>
       </Fragment>
     );
