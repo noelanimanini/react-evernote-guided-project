@@ -9,14 +9,15 @@ class NoteContainer extends Component {
     notes: [],
     addednote: {},
     clicked: false,
-    // changeNote: []
+    foundNotes: []
   }
 
   componentDidMount () {
     fetch('http://localhost:3000/api/v1/notes')
     .then(response => response.json())
     .then(notes => this.setState({
-          notes: notes 
+          notes: notes,
+          foundNotes: notes 
       })
     )
   }
@@ -37,7 +38,7 @@ class NoteContainer extends Component {
 
   changeNote = (e) => {
     e.persist()
-    console.log("This works")
+    console.log(e.target.name)
     this.setState(prevState => ({
       addednote: {
         ...prevState.addednote,
@@ -89,21 +90,71 @@ class NoteContainer extends Component {
   }
 
   handleSearch = (e) => {
-    console.log(e.target.value)
+
+    var newArr = []
+    for (let i = 0; i < this.state.notes.length; i++){
+      let note = this.state.notes[i].title 
+      console.log(note)
+       let searchNote = this.state.notes[i]
+      if (note.includes(e.target.value)) {
+          newArr.push(searchNote)
+          // console.log(this.state)
+
+      } 
+    }
+        this.setState({
+          foundNotes: newArr
+    })
+    console.log(this.state)
   }
 
+  // foundNotesFunction = (note) => {
+  //   console.log('this works too well')
+  //   console.log(note)
+  // }
+
+    // for (let i = 0; i < props.length; i++) {
+    //   let note = props[i].title
+    //   let noteTitle = note.search(/([a-zA-Z])\w+/g)
+    //   console.log(note)
+    //   console.log(noteTitle)
+  
+
+     // const search = e.target.value
+    // // console.log(props)
+    // // console.log(searchTerm)
+
+    // 
+
+    // for(let i = 0; i < props.length; i++) {
+    //   const noteTitle = props[i].title
+    //   const foundNote = noteTitle.find( title => title === searchTerm)
+    //   console.log(foundNote)
+
+    // e.persist()
+    // const foundNote = e.target.value
+    // this.setState( )
+      
+    // //   prevState => {
+    // //   return {notes: prevState.notes.filter( note => note.title === foundNote ? note.title : foundNote)}
+    // // })
+    // console.log(foundNote)
+    // console.log(this.state.notes.title)
+  
 
 
   render() {
     return (
       <Fragment>
-        <Search  handleSearch={this.handleSearch} />
+        <Search  handleSearch={this.handleSearch} notes={this.state.notes} />
         <div className='container'>
           <Sidebar 
           handleClick={this.handleClick} 
-          notes={this.state.notes} 
+          foundNotes={this.state.foundNotes} 
           handleCancel={this.handleCancel}
           handleNew={this.handleNew}
+          // foundNotes={this.state.foundNotes} 
+          // foundNotesFunction={this.foundNotesFunction}
           />
           <Content 
           notecontent={this.state.addednote} 
