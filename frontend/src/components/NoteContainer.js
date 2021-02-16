@@ -48,6 +48,7 @@ class NoteContainer extends Component {
   }
 
   submitHandler = (note, e) => {
+    
     e.preventDefault()
     fetch(`http://localhost:3000/api/v1/notes/${note.notecontent.id}`, {
       method: "PATCH", 
@@ -60,7 +61,7 @@ class NoteContainer extends Component {
     }).then(response => response.json())
     .then( (freshNote) => {
         this.setState((prevState) => {
-          return {notes: prevState.notes.map( oldNote => oldNote.id === freshNote.id ? freshNote : oldNote)}
+          return {foundNotes: prevState.foundNotes.map( oldNote => oldNote.id === freshNote.id ? freshNote : oldNote)}
         })
     } )
   }
@@ -73,20 +74,23 @@ class NoteContainer extends Component {
   }
 
   handleNew = (e) => {
+  
     console.log(e)
-    e.preventDefault()
+    e.persist()
     fetch('http://localhost:3000/api/v1/notes', {
       method: "POST", 
       headers: {'Content-Type' : 'application/json'},
       body: JSON.stringify({
-        title: "This Work",
-        body: "This Works",
+        title: "Default",
+        body: "Default",
         user_id: 1
       })
     }).then(response => response.json())
     .then( (newNote) => this.setState((prevState) => {
-      return {notes: [...prevState.notes, newNote]}
+      console.log([...prevState.foundNotes])
+      return {foundNotes: [...prevState.foundNotes, newNote]}
     }))
+
   }
 
   handleSearch = (e) => {
@@ -94,13 +98,17 @@ class NoteContainer extends Component {
     var newArr = []
     for (let i = 0; i < this.state.notes.length; i++){
       let note = this.state.notes[i].title 
+      let noteBody = this.state.notes[i].body
       console.log(note)
        let searchNote = this.state.notes[i]
       if (note.includes(e.target.value)) {
           newArr.push(searchNote)
           // console.log(this.state)
+       
+      } else if (noteBody.includes(e.target.value)) {
+        newArr.push(searchNote)
+      }
 
-      } 
     }
         this.setState({
           foundNotes: newArr
