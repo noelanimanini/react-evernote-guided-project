@@ -25,6 +25,7 @@ class Content extends Component {
       notecontent={this.props.notecontent} 
       handleEditButton={this.props.handleEditButton} 
       clicked={this.props.clicked} 
+      handleDelete={this.props.handleDelete}
       />;
 
     } else {

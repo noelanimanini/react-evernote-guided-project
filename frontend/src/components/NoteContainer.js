@@ -17,7 +17,7 @@ class NoteContainer extends Component {
     .then(response => response.json())
     .then(notes => this.setState({
           notes: notes,
-          foundNotes: notes 
+          foundNotes: notes
       })
     )
   }
@@ -94,18 +94,20 @@ class NoteContainer extends Component {
   }
 
   handleSearch = (e) => {
-
+    e.persist()
     var newArr = []
     for (let i = 0; i < this.state.notes.length; i++){
       let note = this.state.notes[i].title 
       let noteBody = this.state.notes[i].body
-      console.log(note)
-       let searchNote = this.state.notes[i]
+     
+      let searchNote = this.state.notes[i]
+
       if (note.includes(e.target.value)) {
+
           newArr.push(searchNote)
-          // console.log(this.state)
-       
+          
       } else if (noteBody.includes(e.target.value)) {
+        console.log(e.target.value)
         newArr.push(searchNote)
       }
 
@@ -113,8 +115,21 @@ class NoteContainer extends Component {
         this.setState({
           foundNotes: newArr
     })
-    console.log(this.state)
+
   }
+
+  handleDelete = (props) => {
+    console.log(props)
+    fetch(`http://localhost:3000/api/v1/notes/${props.notecontent.id}`, {
+      method: 'DELETE'
+    }).then(() => this.setState(prevState => {
+      let minusNotes = [...prevState.foundNotes].filter(note => note.id !== props.notecontent.id)
+      return { foundNotes: minusNotes, addednote: {} }
+    }))
+      
+  }
+
+  
 
   render() {
     return (
@@ -134,7 +149,9 @@ class NoteContainer extends Component {
             clicked={this.state.clicked} 
             changeNote={this.changeNote} 
             submitHandler={this.submitHandler} 
-            handleCancel={this.handleCancel}/>
+            handleCancel={this.handleCancel}
+            handleDelete={this.handleDelete}/>
+
         </div>
       </Fragment>
     );
