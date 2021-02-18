@@ -1,9 +1,9 @@
 class Api::V1::NotesController < ApplicationController
   before_action :set_note, only: [:show,:update,:destroy]
   
-
   def index
-    notes = Note.all
+    notes = Note.where(user_id: @user.id)
+    # notes = Note.all
     render json: notes, status: 200
   end
 
