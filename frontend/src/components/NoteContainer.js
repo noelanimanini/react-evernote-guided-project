@@ -78,7 +78,7 @@ class NoteContainer extends Component {
       body: JSON.stringify({
         title: note.notecontent.title,
         body: note.notecontent.body,
-        user_id: 1
+        user_id: note.notecontent.user.id
       })
     }).then(response => response.json())
     .then( (freshNote) => {
@@ -96,8 +96,9 @@ class NoteContainer extends Component {
   }
 
   handleNew = (e) => {
+
     const token = localStorage.token; 
-    console.log(e)
+
     e.persist()
     fetch('http://localhost:3000/api/v1/notes', {
       method: "POST", 
@@ -108,7 +109,7 @@ class NoteContainer extends Component {
       body: JSON.stringify({
         title: "Default",
         body: "Default",
-        user_id: 1
+        user_id: this.props.user.id
       })
     }).then(response => response.json())
     .then( (newNote) => this.setState((prevState) => {
@@ -132,7 +133,7 @@ class NoteContainer extends Component {
           newArr.push(searchNote)
           
       } else if (noteBody.includes(e.target.value)) {
-        console.log(e.target.value)
+    
         newArr.push(searchNote)
       }
 
@@ -145,7 +146,7 @@ class NoteContainer extends Component {
 
   handleDelete = (props) => {
     const token = localStorage.token; 
-    console.log(props)
+
     fetch(`http://localhost:3000/api/v1/notes/${props.notecontent.id}`, {
       method: 'DELETE',
       headers: {Authorization: `Bearer ${token}`},
@@ -165,7 +166,7 @@ class NoteContainer extends Component {
     return (
       <Fragment>
         <NavBar handleLogout={this.props.handleLogout}/>
-        <Header />
+        <Header user={this.props.user}/>
       
         <Search  handleSearch={this.handleSearch} notes={this.state.notes} />
         <div className='container'>
@@ -174,6 +175,7 @@ class NoteContainer extends Component {
             foundNotes={this.state.foundNotes} 
             handleCancel={this.handleCancel}
             handleNew={this.handleNew}
+            // user={this.props.user}
             
           />
           <Content 

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Grid, Paper, Avatar, TextField, Button} from '@material-ui/core';
+import { Grid, Paper, Avatar, TextField, Button, Typography} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { Link } from 'react-router-dom'
 
 class Login extends React.Component {
 
@@ -44,6 +45,11 @@ class Login extends React.Component {
                         label="Remember Me"
                         />
                         <Button  type="submit" value="submit" background-color="white" fullWidth variant="contained" style={buttonStyle} onClick={(e) => this.props.handleLogin(e, this.state)}>Sign In</Button>
+                        <Typography> Don't have an account?
+                        <Link to="/signup">
+                            Sign Up
+                        </Link>
+                        </Typography> 
                         {/* <Typography>
                         <Link href="#" >
                             Forgot Password?

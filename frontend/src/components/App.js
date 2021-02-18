@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import {Route, withRouter, Redirect} from 'react-router-dom'
+import {Route, Switch, withRouter, Redirect} from 'react-router-dom'
 import NoteContainer from './NoteContainer';
 import Login from './Login';
+import SignUp from './SignUp';
 
 const api = "http://localhost:3000/api/v1"
 
 class App extends Component {
 
   state = {
-    user: {},
+    user: {
+      username: '',
+      id: null
+    },
     error: false,
   }
 
@@ -49,7 +53,7 @@ class App extends Component {
       body: JSON.stringify(loginInfo)
     }).then(response => response.json())
     .then(data => this.handleAuthResponse(data))
-    .catch(console.log)
+    .catch(error => alert(error))
    
   }
 
@@ -92,6 +96,20 @@ class App extends Component {
     })
   }
 
+  handleSignUp = (e, userInfo) => {
+    e.preventDefault()
+    fetch(api + '/signup', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({user: userInfo})
+    }).then(response => response.json())
+    .then(data => this.handleAuthResponse(data))
+    .catch(console.log)
+   
+  }
+
   
   render() {
    
@@ -99,12 +117,18 @@ class App extends Component {
     return (
 
       <div>
+        <Switch>
 
-        <Route exact path="/login" render={() => {return <Login handleLogin={this.handleLogin} handleChange={this.handleChange} />}} />
+          <Route exact path="/login" render={() => {return <Login handleSignUp={this.handleSignUp} handleLogin={this.handleLogin} handleChange={this.handleChange} />}} />
 
-        {!user.id && <Redirect to="/login" />}
+          <Route path="/signup" render={() => {return <SignUp handleSignUp={this.handleSignUp}/>}} />
+        
 
-        <Route exact path="/notes" render={() => {return <NoteContainer handleLogout={this.handleLogout}/>}} />
+          {!localStorage.token && <Redirect to="/login" />}
+
+          <Route exact path="/notes" render={() => {return <NoteContainer handleLogout={this.handleLogout} user={user}/>}} />
+        </Switch>
+        
 
       </div>
     
