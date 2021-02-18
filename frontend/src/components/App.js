@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route, withRouter} from 'react-router-dom'
+import {Route, withRouter, Redirect} from 'react-router-dom'
 import NoteContainer from './NoteContainer';
 import Login from './Login';
 
@@ -85,16 +85,26 @@ class App extends Component {
     })
   }
 
+  handleLogout = () => {
+    localStorage.clear()
+    this.setState({
+      user: {}
+    })
+  }
+
   
   render() {
-    console.log(this.props)
-    // const { user, error } = this.state
+   
+    const { user, error } = this.state
     return (
 
       <div>
 
         <Route exact path="/login" render={() => {return <Login handleLogin={this.handleLogin} handleChange={this.handleChange} />}} />
-        <Route exact path="/notes" component={NoteContainer} />
+
+        {!user.id && <Redirect to="/login" />}
+
+        <Route exact path="/notes" render={() => {return <NoteContainer handleLogout={this.handleLogout}/>}} />
 
       </div>
     

@@ -3,7 +3,7 @@ import Search from './Search';
 import Sidebar from './Sidebar';
 import Content from './Content';
 import Header from './Header';
-
+import NavBar from './NavBar';
 
 class NoteContainer extends Component {
 
@@ -67,11 +67,14 @@ class NoteContainer extends Component {
   }
 
   submitHandler = (note, e) => {
-    
+    const token = localStorage.token; 
     e.preventDefault()
     fetch(`http://localhost:3000/api/v1/notes/${note.notecontent.id}`, {
       method: "PATCH", 
-      headers: {'Content-Type' : 'application/json'},
+      headers: {
+        'Content-Type' : 'application/json', 
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify({
         title: note.notecontent.title,
         body: note.notecontent.body,
@@ -93,12 +96,15 @@ class NoteContainer extends Component {
   }
 
   handleNew = (e) => {
-  
+    const token = localStorage.token; 
     console.log(e)
     e.persist()
     fetch('http://localhost:3000/api/v1/notes', {
       method: "POST", 
-      headers: {'Content-Type' : 'application/json'},
+      headers: {
+        'Content-Type' : 'application/json',
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify({
         title: "Default",
         body: "Default",
@@ -138,9 +144,11 @@ class NoteContainer extends Component {
   }
 
   handleDelete = (props) => {
+    const token = localStorage.token; 
     console.log(props)
     fetch(`http://localhost:3000/api/v1/notes/${props.notecontent.id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {Authorization: `Bearer ${token}`},
     }).then(() => this.setState(prevState => {
       let minusNotes = [...prevState.foundNotes].filter(note => note.id !== props.notecontent.id)
       return { foundNotes: minusNotes, addednote: {} }
@@ -156,6 +164,7 @@ class NoteContainer extends Component {
     console.log(this.state.foundNotes)
     return (
       <Fragment>
+        <NavBar handleLogout={this.props.handleLogout}/>
         <Header />
       
         <Search  handleSearch={this.handleSearch} notes={this.state.notes} />
