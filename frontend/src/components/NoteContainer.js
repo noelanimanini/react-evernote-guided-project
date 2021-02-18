@@ -1,7 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment} from 'react';
 import Search from './Search';
 import Sidebar from './Sidebar';
 import Content from './Content';
+import Header from './Header';
+
 
 class NoteContainer extends Component {
 
@@ -9,17 +11,34 @@ class NoteContainer extends Component {
     notes: [],
     addednote: {},
     clicked: false,
-    foundNotes: []
+    foundNotes: [], 
+    userState: {
+      id: [], 
+      name: []
+    }
   }
 
   componentDidMount () {
-    fetch('http://localhost:3000/api/v1/notes')
-    .then(response => response.json())
-    .then(notes => this.setState({
-          notes: notes,
+    this.fetchNotes()
+  }
+
+  fetchNotes = () => {
+    const token = localStorage.token; 
+    fetch('http://localhost:3000/api/v1/notes', {
+      method: 'GET', 
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(response => response.json())
+      .then(notes => {
+        
+        this.setState({ 
+          notes: notes, 
           foundNotes: notes
+        })
+        
       })
-    )
+      // .catch(error => alert(error))
   }
 
   handleClick = (notes) => {
@@ -131,9 +150,14 @@ class NoteContainer extends Component {
 
   
 
+  
+
   render() {
+    console.log(this.state.foundNotes)
     return (
       <Fragment>
+        <Header />
+      
         <Search  handleSearch={this.handleSearch} notes={this.state.notes} />
         <div className='container'>
           <Sidebar 

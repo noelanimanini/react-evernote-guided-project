@@ -26,6 +26,7 @@ class Content extends Component {
       handleEditButton={this.props.handleEditButton} 
       clicked={this.props.clicked} 
       handleDelete={this.props.handleDelete}
+   
       />;
 
     } else {

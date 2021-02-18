@@ -9,9 +9,13 @@
   font-family: 'Didact Gothic'
 }
 
-body {
+html,body{
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
+  border-width: 5px;
+  display:block;
 }
 
 
@@ -39,6 +43,10 @@ p.instructions {
   border: 1px dashed grey;
   box-sizing: border-box;
   resize: none;
+}
+
+.nav-item-button {
+  color: white;
 }
 
 .nav-bar {
@@ -92,7 +100,7 @@ div.sidebar ul {
   padding: 0;
   display: flex;
   flex-direction: column;
-
+  
 }
 
 div.sidebar ul li {
@@ -140,6 +148,7 @@ div.sidebar ul li:hover {
 .sidebar {
   width:25%;
   overflow: scroll;
+  height: 75vh;
 }
 
 .detail {
@@ -187,4 +196,18 @@ button:hover, .nav-bar:hover, input[type="submit"]:hover {
 
 button:focus, input[type="submit"]:focus {
   outline: none;
+}
+
+.modal-container {
+  /* position: fixed; Stay in place */
+  /* z-index: 1; Sit on top */
+  /* left: 0;
+  top: 0; */
+  width: 75%; /* Full width */
+  height: 75%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  
+  padding: 60px;
+  margin: 5px auto;
+
 }
