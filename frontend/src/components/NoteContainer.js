@@ -156,9 +156,6 @@ class NoteContainer extends Component {
     }))
       
   }
-
-  
-
   
 
   render() {
@@ -186,7 +183,6 @@ class NoteContainer extends Component {
             submitHandler={this.submitHandler} 
             handleCancel={this.handleCancel}
             handleDelete={this.handleDelete}/>
-
         </div>
       </Fragment>
     );

@@ -11,13 +11,27 @@ import Instructions from './Instructions';
           refactor to get this Content component to work.
 */
 class Content extends Component {
+
+    // state = {
+    //   cancelEdit: true
+    // }
+
+    // handleCancelEdit = () => {
+      
+    //   this.setState({
+    //     cancelEdit: false
+    //   })
+    // }
+
   renderContent = () => {
     if (this.props.clicked === true) {
       return <NoteEditor 
       notecontent={this.props.notecontent} 
       changeNote={this.props.changeNote} 
       submitHandler={this.props.submitHandler} 
-      handleCancel={this.props.handleCancel} />;
+      handleCancel={this.props.handleCancel} 
+     
+      />;
       
     } else if (this.props.notecontent.body) {
 
